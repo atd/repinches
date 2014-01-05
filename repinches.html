@@ -1,0 +1,88 @@
+<head>
+  <title>repinches</title>
+  <script>
+    function initGoogleApi() {
+      gapi.client.setApiKey('AIzaSyCl1ybNI6EWjT6PAXPPrY4kFLqZsn7Teqg');
+      gapi.client.load('youtube', 'v3');
+    };
+  </script>
+  <script src="https://apis.google.com/js/client.js?onload=initGoogleApi"></script>
+</head>
+
+<body>
+  <div class="container">
+    {{> search}}
+
+    <div class="row">
+      <div class="span11">
+        {{> playing}}
+      </div>
+      <div class="span1">
+        {{> add}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="span12">
+        {{> playlist}}
+      </div>
+    </div>
+  </div>
+</body>
+
+<template name="search">
+  <div class="row">
+    <div class="span12">
+      <input type=text" id="search_query" class="span12"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12">
+      {{#each songs}}
+        {{> searchSong}}
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="searchSong">
+  <div class="media">
+    <a class="pull-left" href="#">
+      <img class="media-object thumbnail" src="{{thumbnail}}"/>
+    </a>
+    <div class="media-body">
+      <h4 class="media-heading title">{{title}}</h4>
+      <span>{{description}}</span>
+    </div>
+  </div>
+</template>
+
+<template name="playing">
+  {{#if current}}
+  current
+  {{else}}
+    The playlist is empty!
+    <input type="button" value="Add songs to the queue" class="add-song btn-primary" />
+  {{/if}}
+</template>
+
+<template name="add">
+  <input type="button" value="Add song" class="add-song btn-primary" />
+</template>
+
+<template name="playlist">
+  {{#each songs}}
+    {{> song}}
+  {{/each}}
+</template>
+
+<template name="song">
+  <div class="media">
+    <a class="pull-left" href="#">
+      <img class="media-object thumbnail" src="{{thumbnail}}"/>
+    </a>
+    <div class="media-body">
+      <h4 class="media-heading title">{{title}}</h4>
+      <span>{{description}}</span>
+    </div>
+  </div>
+</template>
