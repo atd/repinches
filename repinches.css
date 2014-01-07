@@ -1,1 +1,4 @@
 /* CSS declarations go here */
+#playlist-empty {
+  text-align: center;
+}

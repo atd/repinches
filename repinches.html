@@ -14,16 +14,19 @@
     {{> search}}
 
     <div class="row">
-      <div class="span11">
-        {{> playing}}
-      </div>
-      <div class="span1">
-        {{> add}}
+      <div class="span12">
+        <div id="ytapiplayer"></div>
+        {{> player}}
       </div>
     </div>
     <div class="row">
       <div class="span12">
         {{> playlist}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset11 span1">
+        {{> add}}
       </div>
     </div>
   </div>
@@ -32,7 +35,7 @@
 <template name="search">
   <div class="row">
     <div class="span12">
-      <input type=text" id="search_query" class="span12"/>
+      <input type=text" id="search_query" class="search-query span12" placeholder="Buscar"/>
     </div>
   </div>
   <div class="row">
@@ -56,17 +59,14 @@
   </div>
 </template>
 
-<template name="playing">
-  {{#if current}}
-  current
+<template name="player">
+  {{#if currentId}}
+    {{init}}
   {{else}}
-    The playlist is empty!
-    <input type="button" value="Add songs to the queue" class="add-song btn-primary" />
+    <div id="playlist-empty">
+      La lista de canciones está vacía
+   </div>
   {{/if}}
-</template>
-
-<template name="add">
-  <input type="button" value="Add song" class="add-song btn-primary" />
 </template>
 
 <template name="playlist">
@@ -85,4 +85,8 @@
       <span>{{description}}</span>
     </div>
   </div>
+</template>
+
+<template name="add">
+  <input type="button" value="Añadir canción" class="add-song btn-primary" />
 </template>
