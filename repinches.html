@@ -1,5 +1,8 @@
 <head>
   <title>repinches</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   <script>
     function initGoogleApi() {
       gapi.client.setApiKey('AIzaSyCl1ybNI6EWjT6PAXPPrY4kFLqZsn7Teqg');
@@ -14,18 +17,18 @@
     {{> search}}
 
     <div class="row">
-      <div class="span12">
+      <div class="col-md-12">
         <div id="ytapiplayer"></div>
         {{> player}}
       </div>
     </div>
     <div class="row">
-      <div class="span12">
+      <div class="col-md-12">
         {{> playlist}}
       </div>
     </div>
     <div class="row">
-      <div class="offset11 span1">
+      <div class="col-md-12">
         {{> add}}
       </div>
     </div>
@@ -34,12 +37,15 @@
 
 <template name="search">
   <div class="row">
-    <div class="span12">
-      <input type=text" id="search_query" class="search-query input-block-level" placeholder="Buscar"/>
+    <div class="col-md-12">
+      <div class="input-group input-group-lg">
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        <input type="text" id="search_query" class="form-control" placeholder="Buscar" />
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="span12">
+    <div class="col-md-12">
       {{#each songs}}
         {{> searchSong}}
       {{/each}}
@@ -63,8 +69,10 @@
   {{#if currentId}}
     {{init}}
   {{else}}
-    <div id="playlist-empty">
-      La lista de canciones está vacía
+    <div class="alert alert-info">
+      <p class="text-center">
+        La lista de canciones está vacía
+      </p>
    </div>
   {{/if}}
 </template>
@@ -88,5 +96,5 @@
 </template>
 
 <template name="add">
-  <input type="button" value="Añadir canción" class="add-song btn-primary" />
+  <input type="button" value="Añadir canción" class="add-song btn btn-primary btn-lg pull-right" />
 </template>

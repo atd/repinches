@@ -52,7 +52,7 @@ Template.player.init = function() {
   } else {
     var params = { allowScriptAccess: "always" };
     var atts = { id: "ytplayer" };
-    var width = "1170";
+    var width = "1140";
 
     swfobject.embedSWF("http://www.youtube.com/v/" + Template.player.current().id + "?enablejsapi=1&playerapiid=ytplayer&version=3&autoplay=1",
                        "ytapiplayer", width, "356", "8", null, null, params, atts)
