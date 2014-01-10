@@ -3,10 +3,11 @@ Template.search.songs = function() {
 }
 
 Template.search.events({
-  'keypress input' : function () {
+  'keypress input' : function (event) {
     var request = gapi.client.youtube.search.list({ q: event.target.value,
                                                     type: 'video',
                                                     part: 'snippet'});
+
     request.execute(function(response) {
       var newSongs = 
         jQuery.map(response.items, function(e) {
