@@ -1,3 +1,9 @@
+Repinches = {};
+
+Repinches.isMobile = function() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
 Template.search.delay = 1000;
 
 Template.search.songs = function() {
@@ -54,6 +60,10 @@ Template.searchSong.events({
   }
 });
 
+Template.player.isMobile = function() {
+  return Repinches.isMobile();
+};
+
 Template.player.current = function() {
   return Songs.findOne()
 };
@@ -64,10 +74,6 @@ Template.player.currentId = function() {
 };
 
 Template.player.init = function() {
-  if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-    return;
-  }
-
   if (Template.player.ytplayer) {
     Template.player.ytplayer.loadVideoById(Template.player.current().id);
   } else {

@@ -76,7 +76,17 @@
 
 <template name="player">
   {{#if currentId}}
-    {{init}}
+    {{#if isMobile}}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-info">
+            {{> song current}}
+          </div>
+        </div>
+      </div>
+    {{else}}
+      {{init}}
+    {{/if}}
   {{else}}
     <div class="alert alert-info">
       <p class="text-center">
