@@ -48,6 +48,10 @@ Template.player.currentId = function() {
 };
 
 Template.player.init = function() {
+  if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    return;
+  }
+
   if (Template.player.ytplayer) {
     Template.player.ytplayer.loadVideoById(Template.player.current().id);
   } else {
