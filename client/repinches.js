@@ -48,11 +48,20 @@ Template.search.events({
 
 Template.searchSong.events({
   'click' : function() {
-    Songs.insert({
-      id: this.id,
-      title: this.title,
-      description: this.description,
-      thumbnail: this.thumbnail
+    var song = Songs.findOne({ id: this.id });
+
+    if (!song) {
+      Songs.insert({
+        id: this.id,
+        title: this.title,
+        description: this.description,
+        thumbnail: this.thumbnail
+      });
+    }
+    
+    QueuedSongs.insert({
+      song_id: this.id,
+      session_id: Meteor.default_connection._lastSessionId
     });
 
     $('#search_query').val('');
@@ -65,27 +74,35 @@ Template.player.isMobile = function() {
 };
 
 Template.player.current = function() {
-  return Songs.findOne()
+  return QueuedSongs.findOne();
+};
+
+Template.player.currentSong = function() {
+  if (Template.player.current()) {
+    return Songs.findOne({ id: Template.player.current().song_id });
+  } else {
+    return null;
+  }
 };
 
 Template.player.init = function() {
   if (Template.player.ytplayer) {
-    Template.player.ytplayer.loadVideoById(Template.player.current().id);
+    Template.player.ytplayer.loadVideoById(Template.player.currentSong().id);
   } else {
     var params = { allowScriptAccess: "always" };
     var atts = { id: "ytplayer" };
     var width = "1140";
 
-    swfobject.embedSWF("http://www.youtube.com/v/" + Template.player.current().id + "?enablejsapi=1&playerapiid=ytplayer&version=3&autoplay=1",
+    swfobject.embedSWF("http://www.youtube.com/v/" + Template.player.currentSong().id + "?enablejsapi=1&playerapiid=ytplayer&version=3&autoplay=1",
                        "ytapiplayer", width, "356", "8", null, null, params, atts)
   }
 };
 
 Template.player.next = function() {
-  Songs.remove(this.current()._id);
+  QueuedSongs.remove(this.current()._id);
 
   if (this.current()) {
-    this.ytplayer.loadVideoById(this.current().id);
+    this.ytplayer.loadVideoById(this.currentSong().id);
   }
 };
 
@@ -95,9 +112,40 @@ Template.player.ended = function(newState) {
   };
 };
 
-Template.playlist.songs = function() {
-  return Songs.find({}, { skip: 1 });
+Template.playlist.queued_songs = function() {
+  return QueuedSongs.find({}, { skip: 1 })
 };
+
+Template.queued_song.song = function() {
+  return Songs.findOne({ id: this.song_id });
+};
+
+Template.queued_song.title = function() {
+  //TODO
+  return Songs.findOne({ id: this.song_id }).title;
+};
+
+Template.queued_song.description = function() {
+  //TODO
+  return Songs.findOne({ id: this.song_id }).description;
+};
+
+Template.queued_song.thumbnail = function() {
+  //TODO
+  return Songs.findOne({ id: this.song_id }).thumbnail;
+};
+
+Template.queued_song.isOwner = function() {
+  return this.session_id === Meteor.default_connection._lastSessionId;
+};
+
+Template.queued_song.events({
+  'click input' : function(event) {
+    if (confirm("¿Borrar canción de la lista?")) {
+      QueuedSongs.remove(this._id);
+    }
+  }
+});
 
 this.onYouTubePlayerReady = function(playerId) {
   Template.player.ytplayer = document.getElementById("ytplayer");

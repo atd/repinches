@@ -1,4 +1,5 @@
 Songs = new Meteor.Collection("songs");
+QueuedSongs = new Meteor.Collection("queued_songs");
 
 if (Meteor.isClient) {
 }

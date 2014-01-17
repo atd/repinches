@@ -79,7 +79,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="alert alert-info">
-            {{> song current}}
+            {{> queued_song current}}
           </div>
         </div>
       </div>
@@ -96,19 +96,22 @@
 </template>
 
 <template name="playlist">
-  {{#each songs}}
-    {{> song}}
+  {{#each queued_songs}}
+    {{> queued_song}}
   {{/each}}
 </template>
 
-<template name="song">
-  <div class="media">
+<template name="queued_song">
+  <div class="media song">
     <a class="pull-left" href="#">
       <img class="media-object thumbnail" src="{{thumbnail}}"/>
     </a>
     <div class="media-body">
       <h4 class="media-heading title">{{title}}</h4>
-      <span>{{description}}</span>
+      <div class="description">{{description}}</div>
+      {{#if isOwner}}
+      <input type="button" value="Borrar" class="delete-queue delete-queue-{{_id}} pull-right btn btn-danger" />
+      {{/if}}
     </div>
   </div>
 </template>
