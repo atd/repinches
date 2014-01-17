@@ -53,7 +53,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 search-list">
       {{#each songs}}
         {{> searchSong}}
       {{/each}}
@@ -62,7 +62,7 @@
 </template>
 
 <template name="searchSong">
-  <div class="media">
+  <div class="media search-song">
     <a class="pull-left" href="#">
       <img class="media-object thumbnail" src="{{thumbnail}}"/>
     </a>
