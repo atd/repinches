@@ -68,11 +68,6 @@ Template.player.current = function() {
   return Songs.findOne()
 };
 
-Template.player.currentId = function() {
-  var song = Songs.findOne();
-  return song && song.id;
-};
-
 Template.player.init = function() {
   if (Template.player.ytplayer) {
     Template.player.ytplayer.loadVideoById(Template.player.current().id);
