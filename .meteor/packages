@@ -6,6 +6,5 @@
 standard-app-packages
 autopublish
 insecure
-preserve-inputs
 jquery
 mrt:bootstrap-3@0.3.7
