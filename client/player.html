@@ -1,0 +1,21 @@
+<template name="player">
+  {{#if current}}
+    {{#if isMobile}}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="alert alert-info">
+            {{> queued_song current}}
+          </div>
+        </div>
+      </div>
+    {{else}}
+      {{init}}
+    {{/if}}
+  {{else}}
+    <div class="alert alert-info">
+      <p class="text-center">
+        La lista de canciones está vacía
+      </p>
+   </div>
+  {{/if}}
+</template>
