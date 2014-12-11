@@ -1,14 +1,14 @@
 Repinches = {};
 
 Repinches.isMobile = function() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i).test(navigator.userAgent);
 };
 
 Template.search.delay = 1000;
 
-Template.search.songs = function() {
-  return Session.get("searchSongs");
-}
+Template.search.helpers({
+  songs: function() { return Session.get("searchSongs"); }
+});
 
 Template.search.apiCall = function(q) {
   var request = gapi.client.youtube.search.list({ q: q,
@@ -23,13 +23,13 @@ Template.search.apiCall = function(q) {
           title: e.snippet.title,
           description: e.snippet.description,
           thumbnail: e.snippet.thumbnails.default.url
-        }
+        };
       });
 
     jQuery('#search-progress').hide();
     Session.set("searchSongs", newSongs);
   });
-}
+};
 
 Template.search.events({
   'keypress input' : function (event) {
@@ -73,9 +73,9 @@ Template.player.isMobile = function() {
   return Repinches.isMobile();
 };
 
-Template.player.current = function() {
-  return QueuedSongs.findOne();
-};
+Template.player.helpers({
+  current: function() { return QueuedSongs.findOne(); }
+});
 
 Template.player.currentSong = function() {
   if (Template.player.current()) {
@@ -94,7 +94,7 @@ Template.player.init = function() {
     var width = "1140";
 
     swfobject.embedSWF("http://www.youtube.com/v/" + Template.player.currentSong().id + "?enablejsapi=1&playerapiid=ytplayer&version=3&autoplay=1",
-                       "ytapiplayer", width, "356", "8", null, null, params, atts)
+                       "ytapiplayer", width, "356", "8", null, null, params, atts);
   }
 };
 
@@ -109,12 +109,12 @@ Template.player.next = function() {
 Template.player.ended = function(newState) {
   if (newState === 0) {
     this.next();
-  };
+  }
 };
 
-Template.playlist.queued_songs = function() {
-  return QueuedSongs.find({}, { skip: 1 })
-};
+Template.playlist.helpers({
+  queued_songs: function() { return QueuedSongs.find({}, { skip: 1 }); }
+});
 
 Template.queued_song.song = function() {
   return Songs.findOne({ id: this.song_id });
