@@ -2,9 +2,9 @@ Template.player.isMobile = function() {
   return Repinches.isMobile();
 };
 
-Template.player.helpers({
-  current: function() { return QueuedSongs.findOne(); }
-});
+Template.player.current = function() {
+  return QueuedSongs.findOne();
+};
 
 Template.player.currentSong = function() {
   if (Template.player.current()) {
@@ -40,3 +40,9 @@ Template.player.ended = function(newState) {
     this.next();
   }
 };
+
+Template.player.helpers({
+  current: Template.player.current
+});
+
+
