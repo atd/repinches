@@ -17,7 +17,7 @@ Template.searchSong.events({
     });
 
     $('#search_query').val('');
-    $('#search-results').hide();
+    $('#search-results').slideUp();
     Session.set("searchSongs", []);
   }
 });

@@ -26,17 +26,24 @@ Template.search.apiCall = function(q) {
 };
 
 Template.search.events({
-  'keypress input' : function (event) {
-    jQuery('#search-results').show();
-    jQuery('#search-progress').show();
+  'keyup input' : function (event) {
 
     if (Template.search.timer) {
       window.clearTimeout(Template.search.timer);
     }
 
-    Template.search.timer = window.setTimeout(function() {
-      Template.search.timer = null;
-      Template.search.apiCall(event.target.value);
-    }, Template.search.delay);
+    if (event.target.value === '') {
+      $('#search-progress').hide();
+      $('#search-results').slideUp();
+      Session.set("searchSongs", []);
+    } else {
+      $('#search-progress').show();
+      $('#search-results').slideDown();
+
+      Template.search.timer = window.setTimeout(function() {
+        Template.search.timer = null;
+        Template.search.apiCall(event.target.value);
+      }, Template.search.delay);
+    }
   }
 });
