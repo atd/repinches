@@ -1,17 +1,16 @@
 <template name="queued_song">
   <div class="media song">
+    {{#if isOwner}}
+      <input type="button" value="Borrar" class="delete-queue delete-queue-{{_id}} btn btn-danger pull-right" />
+    {{/if}}
+
     <a class="media-left" href="#">
       <img src="{{thumbnail}}"/>
     </a>
+
     <div class="media-body">
       <h4 class="media-heading title">{{title}}</h4>
       <div class="description">{{description}}</div>
-      {{#if isOwner}}
-      {{/if}}
-    </div>
-
-    <div class="media-right">
-      <input type="button" value="Borrar" class="delete-queue delete-queue-{{_id}} btn btn-danger" />
     </div>
   </div>
 </template>
