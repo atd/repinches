@@ -27,6 +27,7 @@ Template.search.apiCall = function(q) {
 
 Template.search.events({
   'keypress input' : function (event) {
+    jQuery('#search-results').show();
     jQuery('#search-progress').show();
 
     if (Template.search.timer) {
